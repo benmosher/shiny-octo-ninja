@@ -45,3 +45,7 @@ mean_and_std_colindices <- function() {
 	colnames <- get_features()
 	which(str_detect(colnames, "(mean|std)\\(\\)$"))
 }
+
+extract_mean_and_std <- function(dataset) {
+	dataset[,mean_and_std_colindices()]
+}
