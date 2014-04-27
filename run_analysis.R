@@ -40,3 +40,8 @@ read_data <- function(group) {
 merged_data <- function() {
 	do.call(rbind, lapply(c("test", "train"), read_data))
 }
+
+mean_and_std_colindices <- function() {
+	colnames <- get_features()
+	which(str_detect(colnames, "(mean|std)\\(\\)$"))
+}
