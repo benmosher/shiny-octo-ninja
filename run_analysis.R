@@ -18,8 +18,25 @@ get_features <- function() {
 	f
 }
 
+al <- NULL
+get_labels <- function() {
+	load_labels <- function() {
+		al <<- read.table("UCI HAR Dataset/activity_labels.txt", sep="", row.names=1, stringsAsFactors=FALSE)[,1]
+	}
+	if (is.null(al)) {
+		message("loading activity levels")
+		load_labels()
+	}
+	al
+}
+
 read_data <- function(group) {
 	X <- read.table(paste("UCI HAR Dataset/",group,"/X_",group,".txt", sep=""), sep="", col.names=get_features())
-	y <- read.table(paste("UCI HAR Dataset/",group,"/y_",group,".txt", sep=""), sep="", col.names="label")
-	cbind(X, y)
+	activity <- as.factor(read.table(paste("UCI HAR Dataset/",group,"/y_",group,".txt", sep=""), sep="")[,1])
+	levels(activity) <- get_labels()
+	cbind(X, activity)
+}
+
+merged_data <- function() {
+	do.call(rbind, lapply(c("test", "train"), read_data))
 }
