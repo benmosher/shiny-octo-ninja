@@ -19,5 +19,7 @@ get_features <- function() {
 }
 
 read_data <- function(group) {
-	read.table(paste("UCI HAR Dataset/",group,"/X_",group,".txt", sep=""), sep="", col.names=get_features())
+	X <- read.table(paste("UCI HAR Dataset/",group,"/X_",group,".txt", sep=""), sep="", col.names=get_features())
+	y <- read.table(paste("UCI HAR Dataset/",group,"/y_",group,".txt", sep=""), sep="", col.names="label")
+	cbind(X, y)
 }
